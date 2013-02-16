@@ -45,3 +45,17 @@ console.log(b1.arr === b2.arr);
 
 console.log(b1)
 console.log(b2)
+
+M1 = new gizmo.Matrix([
+  [1,7,3],
+  [9,4,0],
+  [2,7,1]
+]);
+
+var M2 = new gizmo.Matrix([
+  [6,2,8],
+  [9,1,3],
+  [0,7,6]
+]);
+
+M = M1.multiply(M2);
