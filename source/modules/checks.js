@@ -7,10 +7,10 @@
      */
 
     /**
-     * Провекра соответствия переменной основым типам
+     * Проверка соответствия переменной основым типам
      *
      * @param {object} O
-     * @return {bool} true - соответсвует, false - не соотвествует
+     * @return {bool} true - соответствует, false - не соотвествует
      */
     gizmo.isTString = function(O)    { return gizmo.itIs("String",O  ); };
     gizmo.isTNumber = function(O)    { return gizmo.itIs("Number",O  ); };
