@@ -5,15 +5,17 @@
 	 *
 	 * @constructor
 	 * @param {object} O
-	 * @param {string} O.Initialize      Функция, являющаяся конструктором класса.
-	 * @param {string} O.Extends         Класс-родитель. Класс от которого наследуем.
-	 * @param {object} O.Methods         Функции, являющиеся методам класса.
-	 * @param {object} O.Statics    		 Свойства класса.
+	 * @param {string} O.Initialize           Функция, являющаяся конструктором класса.
+	 * @param {string} O.Extends              Класс-родитель. Класс от которого наследуем.
+	 * @param {object} O.Methods              Функции, являющиеся методам класса.
+	 * @param {object} O.Statics    		      Свойства класса.
+   * @param {object} property
+   * @param {object} property.checkingMode  Включить режим проверки соответсвия типа присваиваемого значения, типу заданному полю по умолчанию.
 	 * @this {gizmo.Class}
 	 * @author <a href="mailto:sogimu@nxt.ru">Alexander Lizin aka Sogimu</a>
 	 * @version 0.1
 	 */
-
+ 
   var Class = function(params, property) {
     var construct = params.Initialize || function() {
     };
