@@ -59,3 +59,6 @@ var M2 = new gizmo.Matrix([
 ]);
 
 M = M1.multiply(M2);
+
+
+gizmo.Quicksort({mas: [{a:1},{a:4},{b:3},{a:6}],target: '<',field: 'a'});

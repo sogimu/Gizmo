@@ -17,23 +17,21 @@
      */
     gizmo.Quicksort = function(O) { // sort: Quicksort
         var mas = O.mas?O.mas:[];
-        //var low = O.low?O.low:0;
-        //var high = O.high?O.high:A.length-1;
         var target = O.target?O.target:'>';
         
         if(O.field) {
             if(target == '>') {
                 mas.sort(function(a,b) {
-                    var s1 = a.field; //будет полюбому строка
-                    var s2 = b.field;
+                    var s1 = a[O.field]; //будет полюбому строка
+                    var s2 = b[O.field];
                     if(s1 > s2){return -1;} //сравнить длины
                     else if(s1 < s2){return 1;}
                 return 0;
                 });
             } else {
                 mas.sort(function(a,b) {
-                    var s1 = a.field; //будет полюбому строка
-                    var s2 = b.field;
+                    var s1 = a[O.field]; //будет полюбому строка
+                    var s2 = b[O.field];
                     if(s1 < s2){return -1;} //сравнить длины
                     else if(s1 > s2){return 1;}
                 return 0;
