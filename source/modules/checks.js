@@ -12,14 +12,14 @@
      * @param {object} O
      * @return {bool} true - соответствует, false - не соотвествует
      */
-    gizmo.isTString = function(O)    { return gizmo.itIs("String",O  ); };
-    gizmo.isTNumber = function(O)    { return gizmo.itIs("Number",O  ); };
-    gizmo.isTBool = function(O)      { return gizmo.itIs("Boolean",O ); };
-    gizmo.isTArray = function(O)     { return gizmo.itIs("Array",O   ); };
-    gizmo.isTFunc = function(O)      { return gizmo.itIs("Function",O); };
-    gizmo.isTDate = function(O)      { return gizmo.itIs("Date",O    ); };
-    gizmo.isTRegExp = function(O)    { return gizmo.itIs("RegExp",O  ); };
-    gizmo.isTObject = function(O)    { return gizmo.itIs("Object",O  ); };
+    gizmo.isTString = function(O)    { return gizmo.itIs(O,"String"  ); };
+    gizmo.isTNumber = function(O)    { return gizmo.itIs(O,"Number"  ); };
+    gizmo.isTBool = function(O)      { return gizmo.itIs(O,"Boolean" ); };
+    gizmo.isTArray = function(O)     { return gizmo.itIs(O,"Array"   ); };
+    gizmo.isTFunc = function(O)      { return gizmo.itIs(O,"Function"); };
+    gizmo.isTDate = function(O)      { return gizmo.itIs(O,"Date"    ); };
+    gizmo.isTRegExp = function(O)    { return gizmo.itIs(O,"RegExp"  ); };
+    gizmo.isTObject = function(O)    { return gizmo.itIs(O,"Object"  ); };
 
     gizmo.Modules['Checks'] = {
         name: "Checks",

@@ -18,14 +18,14 @@
      * @return {object} O or error throw
      */
 	var Filter = function(O, type) {
-		if(gizmo.isSet(O) && gizmo.itIs(type, O) === true && isType(type)) {
+		if(gizmo.isSet(O) && gizmo.itIs(O,type) === true && isType(type)) {
 		  return O
 		}else {
-		  throw TypeError(gizmo.typeIs(O) + " != " + type);
+		  throw TypeError(gizmo.type(O) + " != " + type);
 		}
 	};
 	var isType = function(O) {
-		if(gizmo.itIs("String", O) === true) {
+		if(gizmo.itIs(O,"String") === true) {
 		  var flag = true;
 		  for(var i in gizmo._types) {
 			if(O === gizmo._types[i]) {
@@ -35,7 +35,7 @@
 		  }
 		  return flag
 		}else {
-		  throw TypeError(gizmo.typeIs(O) + " <- it's not name of type");
+		  throw TypeError(gizmo.type(O) + " <- it's not name of type");
 		}
 	};
     gizmo.Filter = Filter;

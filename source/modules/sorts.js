@@ -15,7 +15,7 @@
      * @param  {object} O.target Цель сортировки ('>' или '<')
      * @return {array} отсортированный массив
      */
-    gizmo.Quicksort = function(O) { // sort: Quicksort
+    gizmo.nativeSort = function(O) { // sort: naiveSort
         var mas = O.mas?O.mas:[];
         var target = O.target?O.target:'>';
         

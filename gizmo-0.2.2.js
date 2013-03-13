@@ -12,7 +12,7 @@
       return false
     }
   };
-  var itIs = function(type, obj) {
+  var itIs = function(obj, type) {
     if(gizmo.isSet(obj)) {
       var clas = Object.prototype.toString.call(obj).slice(8, -1);
       return obj !== null && clas == type
@@ -20,21 +20,21 @@
       return false
     }
   };
-  var typeIs = function(obj) {
+  var type = function(obj) {
     var clas = {}.toString.call(obj).slice(8, -1);
     return clas
   };
   var clone = function clone(obj) {
-    if(gizmo.typeIs(obj) !== "Array" && gizmo.typeIs(obj) !== "Object") {
+    if(gizmo.type(obj) !== "Array" && gizmo.type(obj) !== "Object") {
       return obj
     }
     var newObj = new obj.constructor;
     for(i in obj) {
       if(obj[i] && obj.hasOwnProperty(i)) {
-        if(gizmo.itIs("Object", obj[i])) {
+        if(gizmo.itIs(obj[i], "Object")) {
           newObj[i] = clone(obj[i])
         }else {
-          if(obj[i] && gizmo.itIs("Array", obj[i])) {
+          if(obj[i] && gizmo.itIs(obj[i], "Array")) {
             newObj[i] = [].concat(obj[i])
           }else {
             newObj[i] = obj[i]
@@ -46,20 +46,20 @@
   };
   gizmo.isSet = isSet;
   gizmo.itIs = itIs;
-  gizmo.typeIs = typeIs;
+  gizmo.type = type;
   gizmo.clone = clone;
   gizmo.Modules["baseVariableFunction"] = {name:"Type", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043e\u043a \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u044b\u0445 \u043d\u0430 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043e\u0432\u0430\u043d\u0438\u0435, \u0443\u0442\u0438\u043d\u043d\u043e\u0439 \u0442\u0438\u043f\u0438\u0437\u0430\u0446\u0438\u0438 \u0438 \u0442.\u0434. "}
 })(gizmo);
 (function(gizmo) {
   var Filter = function(O, type) {
-    if(gizmo.isSet(O) && gizmo.itIs(type, O) === true && isType(type)) {
+    if(gizmo.isSet(O) && gizmo.itIs(O, type) === true && isType(type)) {
       return O
     }else {
-      throw TypeError(gizmo.typeIs(O) + " != " + type);
+      throw TypeError(gizmo.type(O) + " != " + type);
     }
   };
   var isType = function(O) {
-    if(gizmo.itIs("String", O) === true) {
+    if(gizmo.itIs(O, "String") === true) {
       var flag = true;
       for(var i in gizmo._types) {
         if(O === gizmo._types[i]) {
@@ -69,7 +69,7 @@
       }
       return flag
     }else {
-      throw TypeError(gizmo.typeIs(O) + " <- it's not name of type");
+      throw TypeError(gizmo.type(O) + " <- it's not name of type");
     }
   };
   gizmo.Filter = Filter;
@@ -77,28 +77,28 @@
 })(gizmo);
 (function(gizmo) {
   gizmo.isTString = function(O) {
-    return gizmo.itIs("String", O)
+    return gizmo.itIs(O, "String")
   };
   gizmo.isTNumber = function(O) {
-    return gizmo.itIs("Number", O)
+    return gizmo.itIs(O, "Number")
   };
   gizmo.isTBool = function(O) {
-    return gizmo.itIs("Boolean", O)
+    return gizmo.itIs(O, "Boolean")
   };
   gizmo.isTArray = function(O) {
-    return gizmo.itIs("Array", O)
+    return gizmo.itIs(O, "Array")
   };
   gizmo.isTFunc = function(O) {
-    return gizmo.itIs("Function", O)
+    return gizmo.itIs(O, "Function")
   };
   gizmo.isTDate = function(O) {
-    return gizmo.itIs("Date", O)
+    return gizmo.itIs(O, "Date")
   };
   gizmo.isTRegExp = function(O) {
-    return gizmo.itIs("RegExp", O)
+    return gizmo.itIs(O, "RegExp")
   };
   gizmo.isTObject = function(O) {
-    return gizmo.itIs("Object", O)
+    return gizmo.itIs(O, "Object")
   };
   gizmo.Modules["Checks"] = {name:"Checks", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043c\u0435\u0442\u043e\u0434\u043e\u0432 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438 \u0442\u0438\u043f\u0430, \u0434\u043b\u044f \u043a\u0430\u0436\u0434\u043e\u0433\u043e \u0442\u0438\u043f\u0430"}
 })(gizmo);
@@ -112,7 +112,7 @@
       var newClass = function(O) {
         (function(O, self) {
           for(var i in O) {
-            switch(gizmo.typeIs(O[i])) {
+            switch(gizmo.type(O[i])) {
               case "Array":
                 self[i] = [].concat(O[i]);
                 break;
@@ -168,7 +168,7 @@
     }
     if(!mode) {
       for(var m in vars) {
-        switch(gizmo.typeIs(vars[m])) {
+        switch(gizmo.type(vars[m])) {
           case "Array":
             newClass.prototype[m] = [].concat(vars[m]);
             break;
@@ -186,14 +186,14 @@
           var key = "_" + m;
           var value = vars[m];
           return function() {
-            return gizmo.Filter(this[key], gizmo.typeIs(value))
+            return gizmo.Filter(this[key], gizmo.type(value))
           }
         }(m);
         setter = function(O) {
           var key = "_" + m;
           var value = vars[m];
           return function(O) {
-            this[key] = gizmo.Filter(O, gizmo.typeIs(value))
+            this[key] = gizmo.Filter(O, gizmo.type(value))
           }
         }(m);
         newClass.prototype.__defineGetter__(m, getter);
@@ -206,7 +206,7 @@
   gizmo.Modules["Class"] = {name:"Class", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u044e\u0449\u0438\u0439 \u043a\u043b\u0430\u0441\u0441\u044b"}
 })(gizmo);
 (function(gizmo) {
-  gizmo.Quicksort = function(O) {
+  gizmo.nativeSort = function(O) {
     var mas = O.mas ? O.mas : [];
     var target = O.target ? O.target : ">";
     if(O.field) {

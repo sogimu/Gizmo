@@ -25,7 +25,7 @@
       var newClass = function(O) {
         (function(O, self) {
           for(var i in O) {
-            switch(gizmo.typeIs(O[i])) {
+            switch(gizmo.type(O[i])) {
               case "Array":
                 self[i] = [].concat(O[i]);
                 break;
@@ -81,7 +81,7 @@
     }
     if(!mode) {
       for(var m in vars) {
-        switch(gizmo.typeIs(vars[m])) {
+        switch(gizmo.type(vars[m])) {
           case "Array":
             newClass.prototype[m] = [].concat(vars[m]);
             break;
@@ -99,14 +99,14 @@
           var key = "_" + m;
           var value = vars[m];
           return function() {
-            return gizmo.Filter(this[key], gizmo.typeIs(value))
+            return gizmo.Filter(this[key], gizmo.type(value))
           }
         }(m);
         setter = function(O) {
           var key = "_" + m;
           var value = vars[m];
           return function(O) {
-            this[key] = gizmo.Filter(O, gizmo.typeIs(value))
+            this[key] = gizmo.Filter(O, gizmo.type(value))
           }
         }(m);
         newClass.prototype.__defineGetter__(m, getter);

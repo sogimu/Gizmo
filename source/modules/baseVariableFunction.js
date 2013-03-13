@@ -2,14 +2,14 @@
     /**
      * * Простейшие провероки переменых на существование (isSet)
 	 * * Проверка типа (itIs)
-	 * * Получение типа (TypeIs)
+	 * * Получение типа (type)
 	 * * Клонирование обекта (clone)
      *
      * @constructor
      * @param {object} O
      * @this {gizmo.isSet}
      * @this {gizmo.itIs}
-     * @this {gizmo.typeIs}
+     * @this {gizmo.type}
      * @this {gizmo.clone}
      * @author <a href="mailto:sogimu@nxt.ru">Alexander Lizin aka Sogimu</a>
      * @version 0.1
@@ -30,10 +30,10 @@
 	 /**
      * Проверка типа переменной
      *
-     * @param {string} type
      * @param {object} obj
+     * @param {string} type
      */
-	var itIs = function(type, obj) {
+	var itIs = function(obj, type) {
 		if(gizmo.isSet(obj)) {
 		  var clas = Object.prototype.toString.call(obj).slice(8, -1);
 		  return obj !== null && clas == type
@@ -47,7 +47,7 @@
      *
      * @param {object} obj
      */
-	var typeIs = function(obj) {
+	var type = function(obj) {
 		var clas = {}.toString.call(obj).slice(8, -1);
 		return clas
 	};
@@ -58,16 +58,16 @@
      * @param {object} obj
      */	
 	var clone = function clone(obj) {
-		if(gizmo.typeIs(obj) !== "Array" && gizmo.typeIs(obj) !== "Object") {
+		if(gizmo.type(obj) !== "Array" && gizmo.type(obj) !== "Object") {
 		  return obj
 		}
 		var newObj = new obj.constructor;
 		for(i in obj) {
 		  if(obj[i] && obj.hasOwnProperty(i)) {
-			if(gizmo.itIs("Object", obj[i])) {
+			if(gizmo.itIs(obj[i], "Object")) {
 			  newObj[i] = clone(obj[i])
 			}else {
-			  if(obj[i] && gizmo.itIs("Array", obj[i])) {
+			  if(obj[i] && gizmo.itIs(obj[i], "Array")) {
 				newObj[i] = [].concat(obj[i])
 			  }else {
 				newObj[i] = obj[i]
@@ -79,7 +79,7 @@
 	};
     gizmo.isSet = isSet;
     gizmo.itIs = itIs;
-    gizmo.typeIs = typeIs;
+    gizmo.type = type;
     gizmo.clone = clone;
 
     gizmo.Modules['baseVariableFunction'] = {

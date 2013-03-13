@@ -1,7 +1,7 @@
 Gizmo
 ======
 
-Gizmo is a free, compact JavaScript framework for OOP with checking variables.
+Gizmo is a free, compact JavaScript framework for OOP with type checking.
 
 Supported browsers:
 
