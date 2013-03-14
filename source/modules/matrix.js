@@ -1,6 +1,6 @@
 (function(gizmo) {
 	/**
-	 * Плагин для работы с матрицами. Создан на основе библиотеки http://sylvester.jcoglan.com. 
+	 * модуль для работы с матрицами. Создан на основе библиотеки http://sylvester.jcoglan.com. 
 	 *
 	 * @constructor
 	 * @param {object} O
@@ -56,9 +56,11 @@
 				var M = this.create(elements);
 				return returnVector ? M.col(1) : M;
 			},
-			/**
-			* Creates iframe with unique name
-			*/
+			
+			x: function(matrix) {
+				return this.multiply(matrix);
+			},
+
 			setElements: function(els) {
 				var i, j, elements = els.elements || els;
 				if (elements[0] && typeof(elements[0][0]) !== 'undefined') {
@@ -82,16 +84,15 @@
 			}
 		}
 	});
+	
+	gizmo.Matrix = matrix;
 
-    gizmo.Plugins['Matrix'] = {
+    gizmo.Modules['Matrix'] = {
         name: "Matrix",
         version: 0.1,
         author: "Alexander Lizin aka Sogimu",
         email: "sogimu@nxt.ru",
-        description: "Плагин для работы с матрицами. Создан на основе библиотеки http://sylvester.jcoglan.com."
+        description: "Модуль для работы с матрицами. Создан на основе библиотеки http://sylvester.jcoglan.com."
     };
-
-	gizmo.Matrix = matrix;
-	gizmo.Matrix.x = matrix.setElements;
 
 }(gizmo));
