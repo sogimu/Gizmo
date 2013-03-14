@@ -206,4 +206,51 @@ test( "gizmo.Class", function() {
 	//////////////////
 
 
+
+});
+
+
+module( "Matrix" );
+test( "gizmo.Matrix", function() {
+	
+	// gizmo.Matrix.x (gizmo.Matrix.multiply)
+	var M1 = new gizmo.Matrix([
+					  [1,7,3],
+					  [9,4,0],
+					  [2,7,1]
+					]);
+	var M2 = new gizmo.Matrix([
+					  [6,2,8],
+					  [9,1,3],
+					  [0,7,6]
+					]);
+
+	var res = (M1.x(M2)).elements;
+	if(res[0][0] == 69){
+		if(res[0][1] == 30){
+			if(res[0][2] == 47){
+				if(res[1][0] == 90){
+					if(res[1][1] == 22){
+						if(res[1][2] == 84){
+							if(res[2][0] == 75){
+								if(res[2][1] == 18){
+									if(res[2][2] == 43){
+										ok( true, "gizmo.Matrix.x (checking multiplication matrixs) Passed!" );
+	
+									}
+					
+								}
+					
+							}
+						}
+		
+					}
+		
+				}
+		
+			}
+		}
+	}
+	
+	/////////
 });
