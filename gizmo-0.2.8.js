@@ -106,7 +106,6 @@
   var Class = function(params, property) {
     var construct = params.Initialize || function() {
     };
-    var newClass = construct;
     if(params.Extend) {
       var superClass = params.Extend;
       var newClass = function(O) {
@@ -122,6 +121,23 @@
             }
           }
         })(superClass.prototype, this);
+        (function(O, self) {
+          for(var i in O) {
+            switch(gizmo.type(O[i])) {
+              case "Array":
+                self[i] = [].concat(O[i]);
+                break;
+              case "Object":
+                self[i] = gizmo.clone(O[i]);
+                break
+            }
+          }
+        })(params.Statics || {}, this);
+        (function(O, self) {
+          for(var i in O) {
+            self[i] = O[i]
+          }
+        })(params.Methods || {}, this);
         construct.call(this, O)
       };
       var f = function() {
@@ -144,6 +160,27 @@
         }else {
           newClass[m] = superClass[m]
         }
+      }
+    }else {
+      var newClass = function(O) {
+        (function(O, self) {
+          for(var i in O) {
+            switch(gizmo.type(O[i])) {
+              case "Array":
+                self[i] = [].concat(O[i]);
+                break;
+              case "Object":
+                self[i] = gizmo.clone(O[i]);
+                break
+            }
+          }
+        })(params.Statics || {}, this);
+        (function(O, self) {
+          for(var i in O) {
+            self[i] = O[i]
+          }
+        })(params.Methods || {}, this);
+        construct.call(this, O)
       }
     }
     var methods = params.Methods || {};

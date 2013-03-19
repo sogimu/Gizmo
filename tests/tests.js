@@ -180,29 +180,33 @@ test( "gizmo.Class", function() {
 	//////////////////
 
 	// gizmo.Class (checking the incompatibility of class objects fields)
+	B = gizmo.Class({
+		Initialize: function() {
+		},
+		Statics: {
+			wewe: "2323",
+			dwe: []
+		}
+	});
 	A = gizmo.Class({
+		Extend: B,
 		Initialize: function() {
 	    },
 	    Statics: {
 	        we: {ad: 'wefwe'},
-			arr: [1,2,3]
+			arr: []
 	    },
 		Methods: {
 			run: function() {
 				return 'wef';
 			}
 		}
-	});
-	B = gizmo.Class({
-	    Extend: A,
-	    Initialize: function(){}
-	});
-	a = new A(42,43);
+	},{checkingMode: false});
 
-	b1 = new B(2);
-	b2 = new B(4);
+	b1 = new A();
+	b2 = new A();
 
-	ok( !(b1.we === b2.we) && !(b1.arr === b2.arr), "gizmo.Class (checking the incompatibility of class objects fields) Passed!" );
+	ok( !(b1.we === b2.we) && !(b1.arr === b2.arr) && !(b1.dwe === b2.dwe), "gizmo.Class (checking the incompatibility of class objects fields) Passed!" );
 	//////////////////
 
 

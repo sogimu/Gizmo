@@ -19,9 +19,10 @@
   var Class = function(params, property) {
     var construct = params.Initialize || function() {
     };
-    var newClass = construct;
+
     if(params.Extend) {
       var superClass = params.Extend;
+      
       var newClass = function(O) {
         (function(O, self) {
           for(var i in O) {
@@ -35,13 +36,35 @@
             }
           }
         })(superClass.prototype, this);
+
+        (function(O, self) {
+        for(var i in O) {
+          switch(gizmo.type(O[i])) {
+            case "Array":
+              self[i] = [].concat(O[i]);
+              break;
+            case "Object":
+              self[i] = gizmo.clone(O[i]);
+              break
+            }
+        }
+        })(params.Statics || {}, this);
+
+        (function(O, self) {
+        for(var i in O) {
+          self[i] = O[i];
+        }
+        })(params.Methods || {}, this);
+
         construct.call(this, O)
       };
+      
       var f = function() {
       };
       f.prototype = superClass.prototype;
       newClass.prototype = new f;
       newClass.prototype.constructor = newClass;
+      
       for(var m in superClass) {
         if(m == "prototype") {
           continue
@@ -58,7 +81,31 @@
           newClass[m] = superClass[m]
         }
       }
+    } else {
+      var newClass = function(O) {
+        (function(O, self) {
+          for(var i in O) {
+            switch(gizmo.type(O[i])) {
+              case "Array":
+                self[i] = [].concat(O[i]);
+                break;
+              case "Object":
+                self[i] = gizmo.clone(O[i]);
+                break
+              }
+          }
+        })(params.Statics || {}, this);
+
+        (function(O, self) {
+          for(var i in O) {
+            self[i] = O[i];
+          }
+        })(params.Methods || {}, this);
+
+        construct.call(this, O);
+      };
     }
+
     var methods = params.Methods || {};
     for(var m in methods) {
       var getter = methods.__lookupGetter__(m), setter = methods.__lookupSetter__(m);
@@ -73,6 +120,7 @@
         newClass.prototype[m] = methods[m]
       }
     }
+
     var vars = params.Statics || {};
     if(gizmo.isSet(property) && gizmo.isSet(property.checkingMode)) {
       var mode = property.checkingMode
