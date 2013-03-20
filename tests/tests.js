@@ -206,9 +206,72 @@ test( "gizmo.Class", function() {
 	b1 = new A();
 	b2 = new A();
 
-	ok( !(b1.we === b2.we) && !(b1.arr === b2.arr) && !(b1.dwe === b2.dwe), "gizmo.Class (checking the incompatibility of class objects fields) Passed!" );
+	ok( !(b1.we === b2.we) && !(b1.arr === b2.arr) && !(b1.dwe === b2.dwe), "gizmo.Class (checking the incompatibility of class objects field) Passed!" );
 	//////////////////
 
+	// gizmo.Class (checking working setter\getter)
+
+	B = gizmo.Class({
+		Initialize: function() {
+		},
+		Statics: {
+			wewe: "2323",
+			dwe: [],
+			_width: 0
+		},
+		Methods: {
+            // width
+            set width(O) {
+                this._width = O;
+            },
+            get width() {
+                return this._width;
+            },
+
+		}
+	});
+	b1 = new B();
+	ok( b1.width == 0, "gizmo.Class (checking working setter\\getter) Passed!" );
+
+	// gizmo.Class (checking working setter\getter without inherits)
+
+	A = gizmo.Class({
+		Initialize: function() {
+
+		},
+		Statics: {
+			_x: 0,
+		},
+		Methods: {
+			set x(O) {
+				this._x = O;
+			},
+			get x() {
+				return this._x;
+			}
+		}
+	});
+	B = gizmo.Class({
+		Initialize: function() {
+		},
+		Statics: {
+			wewe: "2323",
+			dwe: [],
+			_width: 0
+		},
+		Methods: {
+            // width
+            set width(O) {
+                this._width = O;
+            },
+            get width() {
+                return this._width;
+            },
+
+		}
+	});
+	b1 = new B();
+	ok( b1.width == 0, "gizmo.Class (checking working setter\\getter with inherits) Passed" );
 
 
 });
@@ -257,4 +320,12 @@ test( "gizmo.Matrix", function() {
 	}
 	
 	/////////
+
+	/*a = function() {
+		this._s = 0;
+		this.__defineGetter__('s', function(){ return this._s});
+		this.__defineSetter__('s', function(O){this._s = O});
+	}
+
+	b = new a();*/
 });

@@ -121,21 +121,31 @@
             }
           }
         })(superClass.prototype, this);
-        (function(O, self) {
-          for(var i in O) {
-            switch(gizmo.type(O[i])) {
+        (function(statics, self) {
+          for(var i in statics) {
+            switch(gizmo.type(statics[i])) {
               case "Array":
-                self[i] = [].concat(O[i]);
+                self[i] = [].concat(statics[i]);
                 break;
               case "Object":
-                self[i] = gizmo.clone(O[i]);
+                self[i] = gizmo.clone(statics[i]);
                 break
             }
           }
         })(params.Statics || {}, this);
-        (function(O, self) {
-          for(var i in O) {
-            self[i] = O[i]
+        (function(methods, self) {
+          for(var i in methods) {
+            var getter = methods.__lookupGetter__(i), setter = methods.__lookupSetter__(i);
+            if(getter || setter) {
+              if(getter) {
+                self.__defineGetter__(i, getter)
+              }
+              if(setter) {
+                self.__defineSetter__(i, setter)
+              }
+            }else {
+              self[i] = methods[i]
+            }
           }
         })(params.Methods || {}, this);
         construct.call(this, O)
@@ -163,21 +173,31 @@
       }
     }else {
       var newClass = function(O) {
-        (function(O, self) {
-          for(var i in O) {
-            switch(gizmo.type(O[i])) {
+        (function(statics, self) {
+          for(var i in statics) {
+            switch(gizmo.type(statics[i])) {
               case "Array":
-                self[i] = [].concat(O[i]);
+                self[i] = [].concat(statics[i]);
                 break;
               case "Object":
-                self[i] = gizmo.clone(O[i]);
+                self[i] = gizmo.clone(statics[i]);
                 break
             }
           }
         })(params.Statics || {}, this);
-        (function(O, self) {
-          for(var i in O) {
-            self[i] = O[i]
+        (function(methods, self) {
+          for(var i in methods) {
+            var getter = methods.__lookupGetter__(i), setter = methods.__lookupSetter__(i);
+            if(getter || setter) {
+              if(getter) {
+                self.__defineGetter__(i, getter)
+              }
+              if(setter) {
+                self.__defineSetter__(i, setter)
+              }
+            }else {
+              self[i] = methods[i]
+            }
           }
         })(params.Methods || {}, this);
         construct.call(this, O)
