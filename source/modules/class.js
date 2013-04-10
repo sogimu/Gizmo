@@ -66,7 +66,7 @@
         }
         })(params.Methods || {}, this);
 
-        construct.call(this, O)
+        construct.call(this, O || {})
       };
       
       var f = function() {
@@ -122,7 +122,7 @@
         }
         })(params.Methods || {}, this);
 
-        construct.call(this, O);
+        construct.call(this, O || {});
       };
     }
 

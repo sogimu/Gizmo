@@ -15,8 +15,54 @@ test( "gizmo.type", function() {
 	// Boolean
 	ok( gizmo.type( true ) == "Boolean", " ok( gizmo.type( true ) == \"Boolean\" Passed!" );
 	
+});
 	
-});	
+test( "gizmo.clone", function() {
+	try {
+		gizmo.clone(new gizmo.Matrix([]));
+		ok( true, " ok( gizmo.clone(new gizmo.Matrix([])) with not exeption. Passed!" );
+
+	}
+	catch(e) {
+		ok( false, " ok( gizmo.clone(new gizmo.Matrix([])) have exeption. Not Passed!" );
+
+	}
+	
+	try {
+		gizmo.clone(new gizmo.Matrix({}));
+		ok( true, " ok( gizmo.clone(new gizmo.Matrix({})) with not exeption. Passed!" );
+
+	}
+	catch(e) {
+		ok( false, " ok( gizmo.clone(new gizmo.Matrix({})) have exeption. Not Passed!" );
+
+	}
+
+	try {
+		gizmo.clone(new gizmo.Matrix());
+		ok( true, " ok( gizmo.clone(new gizmo.Matrix()) with not exeption. Passed!" );
+
+	}
+	catch(e) {
+		ok( false, " ok( gizmo.clone(new gizmo.Matrix()) have exeption. Not Passed!" );
+
+	}
+
+	try {
+		gizmo.clone(new gizmo.Matrix);
+		ok( true, " ok( gizmo.clone(new gizmo.Matrix) with not exeption. Passed!" );
+
+	}
+	catch(e) {
+		ok( false, " ok( gizmo.clone(new gizmo.Matrix) have exeption. Not Passed!" );
+
+	}
+	
+	gizmo.clone(new gizmo.Matrix([]));
+	gizmo.clone(new gizmo.Matrix({}));
+	gizmo.clone(new gizmo.Matrix());
+
+});
 
 module( "Checks" );
 test( "gizmo.isTString", function() {
@@ -57,8 +103,7 @@ test( "gizmo.nativeSort", function() {
 	ok( (mas[0].a<mas[1].a) && (mas[1].a<mas[2].a) && (mas[2].a<mas[3].a), " ok( gizmo.nativeSort( {mas: [{a:2},{a:1},{a:4},{a:6}], target: '<', field: 'a'} ) == [{a:1}, {a:2}, {a:4}, {a:6}] Passed!" );
 	
 
-});
-	   
+});   
 	   
 module( "Class" );
 test( "gizmo.Class", function() {
@@ -272,7 +317,6 @@ test( "gizmo.Class", function() {
 	});
 	b1 = new B();
 	ok( b1.width == 0, "gizmo.Class (checking working setter\\getter with inherits) Passed" );
-
 
 });
 
