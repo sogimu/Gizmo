@@ -31,6 +31,17 @@
 					// this.columns should equal matrix.rows
 				return (this.elements[0].length === M.length);
 			},
+			map: function(fn) {
+			  var els = [], ni = this.elements.length, ki = ni, i, nj, kj = this.elements[0].length, j;
+			  do { i = ki - ni;
+			    nj = kj;
+			    els[i] = [];
+			    do { j = kj - nj;
+			      els[i][j] = fn(this.elements[i][j], i + 1, j + 1);
+			    } while (--nj);
+			  } while (--ni);
+			  return this.create(els);
+			},
 			multiply: function(matrix) {
 				if (this.elements.length === 0) { return null; }
 				if (!matrix.elements) {
@@ -38,7 +49,7 @@
 				}
 				var returnVector = matrix.modulus ? true : false;
 				var M = matrix.elements || matrix;
-				if (typeof(M[0][0]) === 'undefined') { M = Sylvester.Matrix.create(M).elements; }
+				if (typeof(M[0][0]) === 'undefined') { M = this.create(M).elements; }
 				if (!this.canMultiplyFromLeft(M)) { return null; }
 				var i = this.elements.length, nj = M[0].length, j;
 				var cols = this.elements[0].length, c, elements = [], sum;
