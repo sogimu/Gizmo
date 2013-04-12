@@ -21,7 +21,7 @@
 		},
 		Methods: {
 			create: function(elements) {
-				var M = new gizmo.Matrix(elements);
+				var M = new gizmo.Math.Matrix(elements);
 				return M;//.setElements(elements);
 			},
 			canMultiplyFromLeft: function(matrix) {
@@ -92,11 +92,65 @@
 				  this.elements.push([elements[i]]);
 				}
 				return this;
-			}
+			},
+			isSquare: function() {
+			  return (this.elements.length == this.elements[0].length);
+			},
+			toRightTriangular: function() {
+			  var M = this.dup(), els;
+			  var n = this.elements.length, k = n, i, np, kp = this.elements[0].length, p;
+			  do { i = k - n;
+			    if (M.elements[i][i] == 0) {
+			      for (j = i + 1; j < k; j++) {
+			        if (M.elements[j][i] != 0) {
+			          els = []; np = kp;
+			          do { p = kp - np;
+			            els.push(M.elements[i][p] + M.elements[j][p]);
+			          } while (--np);
+			          M.elements[i] = els;
+			          break;
+			        }
+			      }
+			    }
+			    if (M.elements[i][i] != 0) {
+			      for (j = i + 1; j < k; j++) {
+			        var multiplier = M.elements[j][i] / M.elements[i][i];
+			        els = []; np = kp;
+			        do { p = kp - np;
+			          // Elements with column numbers up to an including the number
+			          // of the row that we're subtracting can safely be set straight to
+			          // zero, since that's the point of this routine and it avoids having
+			          // to loop over and correct rounding errors later
+			          els.push(p <= i ? 0 : M.elements[j][p] - M.elements[i][p] * multiplier);
+			        } while (--np);
+			        M.elements[j] = els;
+			      }
+			    }
+			  } while (--n);
+			  return M;
+			},
+
+			// Returns the determinant for square matrices
+			determinant: function() {
+			  if (!this.isSquare()) { return null; }
+			  var M = this.toRightTriangular();
+			  var det = M.elements[0][0], n = M.elements.length - 1, k = n, i;
+			  do { i = k - n + 1;
+			    det = det * M.elements[i][i];
+			  } while (--n);
+			  return det;
+			},
+
+			det: function() { return this.determinant(); },
+
+			dup: function() {
+			  return this.create(this.elements);
+			},
+
 		}
 	});
 	
-	gizmo.Matrix = matrix;
+	gizmo.Math.Matrix = matrix;
 
     gizmo.Modules['Matrix'] = {
         name: "Matrix",

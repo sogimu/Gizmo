@@ -327,10 +327,26 @@
   }, gizmo.Modules["Sorts"] = {name:"Sorts", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043c\u0435\u0442\u043e\u0434\u043e\u0432 \u0440\u0435\u0430\u043b\u0438\u0437\u0443\u044e\u0449\u0438\u0445 \u0441\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u043a\u0438"}
 })(gizmo);
 (function(gizmo) {
+  var Sgn = function(num) {
+    if(num > 0) {
+      return 1
+    }else {
+      if(num < 0) {
+        return-1
+      }else {
+        return 0
+      }
+    }
+  };
+  gizmo.Math = {};
+  gizmo.Math.Sgn = Sgn;
+  gizmo.Modules["Math"] = {name:"Math", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0441 \u043c\u0430\u0442\u0435\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u043c\u0438 \u0444\u0443\u043d\u043a\u0446\u0438\u044f\u043c\u0438"}
+})(gizmo);
+(function(gizmo) {
   var matrix = gizmo.Class({Initialize:function(O) {
     return this.setElements(O)
   }, Statics:{}, Methods:{create:function(elements) {
-    var M = new gizmo.Matrix(elements);
+    var M = new gizmo.Math.Matrix(elements);
     return M
   }, canMultiplyFromLeft:function(matrix) {
     if(this.elements.length === 0) {
@@ -341,6 +357,18 @@
       M = Sylvester.Matrix.create(M).elements
     }
     return this.elements[0].length === M.length
+  }, map:function(fn) {
+    var els = [], ni = this.elements.length, ki = ni, i, nj, kj = this.elements[0].length, j;
+    do {
+      i = ki - ni;
+      nj = kj;
+      els[i] = [];
+      do {
+        j = kj - nj;
+        els[i][j] = fn(this.elements[i][j], i + 1, j + 1)
+      }while(--nj)
+    }while(--ni);
+    return this.create(els)
   }, multiply:function(matrix) {
     if(this.elements.length === 0) {
       return null
@@ -353,7 +381,7 @@
     var returnVector = matrix.modulus ? true : false;
     var M = matrix.elements || matrix;
     if(typeof M[0][0] === "undefined") {
-      M = Sylvester.Matrix.create(M).elements
+      M = this.create(M).elements
     }
     if(!this.canMultiplyFromLeft(M)) {
       return null
@@ -396,9 +424,121 @@
       this.elements.push([elements[i]])
     }
     return this
+  }, isSquare:function() {
+    return this.elements.length == this.elements[0].length
+  }, toRightTriangular:function() {
+    var M = this.dup(), els;
+    var n = this.elements.length, k = n, i, np, kp = this.elements[0].length, p;
+    do {
+      i = k - n;
+      if(M.elements[i][i] == 0) {
+        for(j = i + 1;j < k;j++) {
+          if(M.elements[j][i] != 0) {
+            els = [];
+            np = kp;
+            do {
+              p = kp - np;
+              els.push(M.elements[i][p] + M.elements[j][p])
+            }while(--np);
+            M.elements[i] = els;
+            break
+          }
+        }
+      }
+      if(M.elements[i][i] != 0) {
+        for(j = i + 1;j < k;j++) {
+          var multiplier = M.elements[j][i] / M.elements[i][i];
+          els = [];
+          np = kp;
+          do {
+            p = kp - np;
+            els.push(p <= i ? 0 : M.elements[j][p] - M.elements[i][p] * multiplier)
+          }while(--np);
+          M.elements[j] = els
+        }
+      }
+    }while(--n);
+    return M
+  }, determinant:function() {
+    if(!this.isSquare()) {
+      return null
+    }
+    var M = this.toRightTriangular();
+    var det = M.elements[0][0], n = M.elements.length - 1, k = n, i;
+    do {
+      i = k - n + 1;
+      det = det * M.elements[i][i]
+    }while(--n);
+    return det
+  }, det:function() {
+    return this.determinant()
+  }, dup:function() {
+    return this.create(this.elements)
   }}});
-  gizmo.Matrix = matrix;
+  gizmo.Math.Matrix = matrix;
   gizmo.Modules["Matrix"] = {name:"Matrix", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0440\u0430\u0431\u043e\u0442\u044b \u0441 \u043c\u0430\u0442\u0440\u0438\u0446\u0430\u043c\u0438. \u0421\u043e\u0437\u0434\u0430\u043d \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0431\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0438 http://sylvester.jcoglan.com."}
+})(gizmo);
+(function(gizmo) {
+  var Vector2D = function(x, y) {
+    this._x = x;
+    this._y = y
+  };
+  Vector2D.prototype = {_x:0, _y:0, X:function(V) {
+    return this.x * V.x + this.y * V.y
+  }, Module:function() {
+    return Math.sqrt(this.x * this.x + this.y * this.y)
+  }, Angle:function(V) {
+    var d = (new gizmo.Math.Matrix([[this.x, this.y], [V.x, V.y]])).determinant();
+    if(this.Module() * V.Module() == 0) {
+      return 0
+    }
+    if(d != 0) {
+      return gizmo.Math.Sgn(d) * Math.acos(V.X(this) / (this.Module() * V.Module()))
+    }else {
+      return Math.acos(V.X(this) / (this.Module() * V.Module()))
+    }
+  }, get x() {
+    return this._x
+  }, get y() {
+    return this._y
+  }};
+  gizmo.Math.Vector2D = Vector2D;
+  gizmo.Modules["Vector2D"] = {name:"Vector2D", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}
+})(gizmo);
+(function(gizmo) {
+  var Polygone = function(arr) {
+    if(gizmo.isTArray(arr)) {
+      this.polygone = arr
+    }else {
+      throw Error("Argument are not array!");
+    }
+  };
+  Polygone.prototype = {_polygone:[], addVector:function(vector) {
+    this.polygone.push(vector);
+    return this
+  }, havePoint:function(point) {
+    var normedPolygone = [];
+    var polygone = this.polygone;
+    for(var i in polygone) {
+      normedPolygone.push(new gizmo.Math.Vector2D(polygone[i].x - point.x, polygone[i].y - point.y))
+    }
+    var angleSum = 0;
+    for(var i = 0;i < normedPolygone.length - 1;i++) {
+      angleSum += normedPolygone[i].Angle(normedPolygone[i + 1])
+    }
+    angleSum += normedPolygone[normedPolygone.length - 1].Angle(normedPolygone[0]);
+    if(angleSum - 2 * Math.PI < 0.01 && angleSum - 2 * Math.PI > -0.01) {
+      return true
+    }else {
+      return false
+    }
+  }, set polygone(arr) {
+    this._polygone = arr
+  }, get polygone() {
+    return this._polygone
+  }};
+  gizmo.Math.Polygone = Polygone;
+  gizmo.Modules["polygone"] = {name:"polygone", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}
 })(gizmo);
 (function(gizmo) {
   var ajax = gizmo.Class({construct:function(O) {

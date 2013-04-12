@@ -19,48 +19,48 @@ test( "gizmo.type", function() {
 	
 test( "gizmo.clone", function() {
 	try {
-		gizmo.clone(new gizmo.Matrix([]));
-		ok( true, " ok( gizmo.clone(new gizmo.Matrix([])) with not exeption. Passed!" );
+		gizmo.clone(new gizmo.Math.Matrix([]));
+		ok( true, " ok( gizmo.clone(new gizmo.Math.Matrix([])) with not exeption. Passed!" );
 
 	}
 	catch(e) {
-		ok( false, " ok( gizmo.clone(new gizmo.Matrix([])) have exeption. Not Passed!" );
+		ok( false, " ok( gizmo.clone(new gizmo.Math.Matrix([])) have exeption. Not Passed!" );
 
 	}
 	
 	try {
-		gizmo.clone(new gizmo.Matrix({}));
-		ok( true, " ok( gizmo.clone(new gizmo.Matrix({})) with not exeption. Passed!" );
+		gizmo.clone(new gizmo.Math.Matrix({}));
+		ok( true, " ok( gizmo.clone(new gizmo.Math.Matrix({})) with not exeption. Passed!" );
 
 	}
 	catch(e) {
-		ok( false, " ok( gizmo.clone(new gizmo.Matrix({})) have exeption. Not Passed!" );
+		ok( false, " ok( gizmo.clone(new gizmo.Math.Matrix({})) have exeption. Not Passed!" );
 
 	}
 
 	try {
-		gizmo.clone(new gizmo.Matrix());
-		ok( true, " ok( gizmo.clone(new gizmo.Matrix()) with not exeption. Passed!" );
+		gizmo.clone(new gizmo.Math.Matrix());
+		ok( true, " ok( gizmo.clone(new gizmo.Math.Matrix()) with not exeption. Passed!" );
 
 	}
 	catch(e) {
-		ok( false, " ok( gizmo.clone(new gizmo.Matrix()) have exeption. Not Passed!" );
+		ok( false, " ok( gizmo.clone(new gizmo.Math.Matrix()) have exeption. Not Passed!" );
 
 	}
 
 	try {
-		gizmo.clone(new gizmo.Matrix);
-		ok( true, " ok( gizmo.clone(new gizmo.Matrix) with not exeption. Passed!" );
+		gizmo.clone(new gizmo.Math.Matrix);
+		ok( true, " ok( gizmo.clone(new gizmo.Math.Matrix) with not exeption. Passed!" );
 
 	}
 	catch(e) {
-		ok( false, " ok( gizmo.clone(new gizmo.Matrix) have exeption. Not Passed!" );
+		ok( false, " ok( gizmo.clone(new gizmo.Math.Matrix) have exeption. Not Passed!" );
 
 	}
 	
-	gizmo.clone(new gizmo.Matrix([]));
-	gizmo.clone(new gizmo.Matrix({}));
-	gizmo.clone(new gizmo.Matrix());
+	gizmo.clone(new gizmo.Math.Matrix([]));
+	gizmo.clone(new gizmo.Math.Matrix({}));
+	gizmo.clone(new gizmo.Math.Matrix());
 
 });
 
@@ -320,17 +320,24 @@ test( "gizmo.Class", function() {
 
 });
 
+module( "Math" );
+test( "gizmo.Math.", function() {
+	ok( gizmo.Math.Sgn(-13) == -1, "gizmo.Math.Sgn Passed!" );
+	ok( gizmo.Math.Sgn(13) == 1, "gizmo.Math.Sgn Passed!" );
+	ok( gizmo.Math.Sgn(0) == 0, "gizmo.Math.Sgn Passed!" );
+
+});
 
 module( "Matrix" );
-test( "gizmo.Matrix", function() {
+test( "gizmo.Math.Matrix", function() {
 	
-	// gizmo.Matrix.x (gizmo.Matrix.multiply)
-	var M1 = new gizmo.Matrix([
+	// gizmo.Math.Matrix.x (gizmo.Math.Matrix.multiply)
+	var M1 = new gizmo.Math.Matrix([
 					  [1,7,3],
 					  [9,4,0],
 					  [2,7,1]
 					]);
-	var M2 = new gizmo.Matrix([
+	var M2 = new gizmo.Math.Matrix([
 					  [6,2,8],
 					  [9,1,3],
 					  [0,7,6]
@@ -346,7 +353,7 @@ test( "gizmo.Matrix", function() {
 							if(res[2][0] == 75){
 								if(res[2][1] == 18){
 									if(res[2][2] == 43){
-										ok( true, "gizmo.Matrix.x (checking multiplication matrixs) Passed!" );
+										ok( true, "gizmo.Math.Matrix.x (checking multiplication matrixs) Passed!" );
 	
 									}
 					
@@ -363,13 +370,26 @@ test( "gizmo.Matrix", function() {
 		}
 	}
 	
-	/////////
+});
 
-	/*a = function() {
-		this._s = 0;
-		this.__defineGetter__('s', function(){ return this._s});
-		this.__defineSetter__('s', function(O){this._s = O});
-	}
+module( "Vector2D" );
+test( "gizmo.Math.Vector2D.X", function() {
+	var V = new gizmo.Math.Vector2D(500, 0);
+	var W = new gizmo.Math.Vector2D(70.7106, 70.7106);
+	
+	ok( V.X(W) == 35355.3, " ok( gizmo.Math.Vector2D.X Passed!" );
+	ok( V.Module() == 500, " ok( gizmo.Math.Vector2D.Module Passed!" );
+	ok( V.Angle(W) - 0.7853981633974481 < 0.01 && V.Angle(W) - 0.7853981633974481 > -0.01, " ok( gizmo.Math.Vector2D.Angle Passed!" );
+});
 
-	b = new a();*/
+module( "Polygone" );
+test( "gizmo.Math.Polygone", function() {
+	polygone = [];
+	polygone = [new gizmo.Math.Vector2D(10,10),new gizmo.Math.Vector2D(110,10),new gizmo.Math.Vector2D(110,110),new gizmo.Math.Vector2D(10,110)];
+	
+	var sk = new gizmo.Math.Polygone(polygone);
+
+	ok( sk.havePoint(new gizmo.Math.Vector2D(50,50)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
+	ok( !sk.havePoint(new gizmo.Math.Vector2D(120,120)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
+
 });
