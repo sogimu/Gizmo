@@ -27,7 +27,7 @@
 			canMultiplyFromLeft: function(matrix) {
 				if (this.elements.length === 0) { return false; }
 					var M = matrix.elements || matrix;
-					if (typeof(M[0][0]) === 'undefined') { M = Sylvester.Matrix.create(M).elements; }
+					if (typeof(M[0][0]) === 'undefined') { M = this.Matrix.create(M).elements; }
 					// this.columns should equal matrix.rows
 				return (this.elements[0].length === M.length);
 			},
@@ -145,6 +145,19 @@
 
 			dup: function() {
 			  return this.create(this.elements);
+			},
+			// Returns the transpose of the matrix
+			transpose: function() {
+			  var rows = this.elements.length, cols = this.elements[0].length;
+			  var elements = [], ni = cols, i, nj, j;
+			  do { i = cols - ni;
+			    elements[i] = [];
+			    nj = rows;
+			    do { j = rows - nj;
+			      elements[i][j] = this.elements[j][i];
+			    } while (--nj);
+			  } while (--ni);
+			  return this.create(elements);
 			},
 
 		}

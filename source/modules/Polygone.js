@@ -52,17 +52,42 @@
             var polygone = this.polygone;
             var points = [];
 
+            var row = [];    
             for(var i in polygone) {
-                points.push( [polygone[i].x, polygone[i].y, 1] );
+                row.push(polygone[j].x);
+                  
             }
+            points.push(row);
+
+            var row = [];    
+            for(var i in polygone) {
+                row.push(polygone[j].y);
+                  
+            }
+            points.push(row);
+
+            var row = [];    
+            for(var i in polygone) {
+                row.push(1);
+                  
+            }
+            points.push(row);
 
             var points = new gizmo.Math.Matrix(points);
-            var points = points.x(matrix).elements;
+            var points = matrix.x(points).elements;
             
             for(var i in polygone) {
                 polygone[i].x = points[i][0];
                 polygone[i].y = points[i][1];
 
+            }
+
+            for(var i in points) {
+                var point = new gizmo.Math.Vector2D(0,0);
+                for(var j in points[i]) {
+                    polygone[i].x = points[i][j];
+                    polygone[i].y = points[i+1][j];
+                }                
             }            
 
         },
