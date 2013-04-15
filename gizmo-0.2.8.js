@@ -497,8 +497,12 @@
     }else {
       return Math.acos(V.X(this) / (this.Module() * V.Module()))
     }
+  }, set x(number) {
+    this._x = number
   }, get x() {
     return this._x
+  }, set y(number) {
+    this._y = number
   }, get y() {
     return this._y
   }};
@@ -531,6 +535,18 @@
       return true
     }else {
       return false
+    }
+  }, applayTransformMatrix:function(matrix) {
+    var polygone = this.polygone;
+    var points = [];
+    for(var i in polygone) {
+      points.push([polygone[i].x, polygone[i].y, 1])
+    }
+    var points = new gizmo.Math.Matrix(points);
+    var points = points.x(matrix).elements;
+    for(var i in polygone) {
+      polygone[i].x = points[i][0];
+      polygone[i].y = points[i][1]
     }
   }, set polygone(arr) {
     this._polygone = arr

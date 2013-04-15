@@ -57,9 +57,18 @@
 
 		// Setters/Getters
 
-	    get x() {
+		// x
+		set x(number) {
+			this._x = number;
+		},
+		get x() {
 	        return this._x;
 	    },
+
+	    // y
+		set y(number) {
+			this._y = number;
+		},
 	    get y() {
 	        return this._y;
 	    }
