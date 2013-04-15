@@ -21,8 +21,8 @@
 		/**
 		 * Перемножение двух 2d векторов
 		 *
-		 * @param {Vector} V
-		 * @param {vector} W
+		 * @param {Vector2D} V
+		 * @param {vector2D} W
 		 */
 		X: function(V) {
 		    return this.x * V.x + this.y * V.y;
@@ -31,7 +31,7 @@
 		/**
 		 * Модуль вектора
 		 *
-		 * @param {Vector} V
+		 * @param {Vector2D} V
 		 */
 		Module: function() {
 		    return Math.sqrt(this.x * this.x + this.y * this.y);
@@ -40,7 +40,7 @@
 		/**
 		 * Минимальный угол между текущим и переданным вектором
 		 *
-		 * @param {Vector} V
+		 * @param {Vector2D} V
 		 */
 		Angle: function(V) {
 			var d = (new gizmo.Math.Matrix([[this.x,this.y],[V.x,V.y]])).determinant();

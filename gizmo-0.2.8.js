@@ -354,7 +354,7 @@
     }
     var M = matrix.elements || matrix;
     if(typeof M[0][0] === "undefined") {
-      M = Sylvester.Matrix.create(M).elements
+      M = this.Matrix.create(M).elements
     }
     return this.elements[0].length === M.length
   }, map:function(fn) {
@@ -474,9 +474,41 @@
     return this.determinant()
   }, dup:function() {
     return this.create(this.elements)
+  }, transpose:function() {
+    var rows = this.elements.length, cols = this.elements[0].length;
+    var elements = [], ni = cols, i, nj, j;
+    do {
+      i = cols - ni;
+      elements[i] = [];
+      nj = rows;
+      do {
+        j = rows - nj;
+        elements[i][j] = this.elements[j][i]
+      }while(--nj)
+    }while(--ni);
+    return this.create(elements)
   }}});
   gizmo.Math.Matrix = matrix;
   gizmo.Modules["Matrix"] = {name:"Matrix", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0440\u0430\u0431\u043e\u0442\u044b \u0441 \u043c\u0430\u0442\u0440\u0438\u0446\u0430\u043c\u0438. \u0421\u043e\u0437\u0434\u0430\u043d \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0431\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0438 http://sylvester.jcoglan.com."}
+})(gizmo);
+(function(gizmo) {
+  var Point2D = function(x, y) {
+    this._x = x;
+    this._y = y
+  };
+  Point2D.prototype = {_x:0, _y:0, Minus:function(P) {
+    return new gizmo.Math.Point2D(this.x - P.x, this.y - P.y)
+  }, set x(number) {
+    this._x = number
+  }, get x() {
+    return this._x
+  }, set y(number) {
+    this._y = number
+  }, get y() {
+    return this._y
+  }};
+  gizmo.Math.Point2D = Point2D;
+  gizmo.Modules["Point2D"] = {name:"Point2D", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0442\u043e\u0447\u043a\u0430"}
 })(gizmo);
 (function(gizmo) {
   var Vector2D = function(x, y) {
@@ -512,19 +544,23 @@
 (function(gizmo) {
   var Polygone = function(arr) {
     if(gizmo.isTArray(arr)) {
-      this.polygone = arr
+      for(var i in arr) {
+        this.addPoint(arr[i])
+      }
     }else {
       throw Error("Argument are not array!");
     }
   };
-  Polygone.prototype = {_polygone:[], addVector:function(vector) {
-    this.polygone.push(vector);
+  Polygone.prototype = {_points:[], _arr:[], _matrix:null, addPoint:function(point) {
+    this._points.push(point);
+    this._arr.push([point.x, point.y, 1]);
+    this._matrix = (new gizmo.Math.Matrix(this._arr)).transpose();
     return this
   }, havePoint:function(point) {
     var normedPolygone = [];
-    var polygone = this.polygone;
-    for(var i in polygone) {
-      normedPolygone.push(new gizmo.Math.Vector2D(polygone[i].x - point.x, polygone[i].y - point.y))
+    var points = this._points;
+    for(var i in points) {
+      normedPolygone.push(new gizmo.Math.Vector2D(points[i].x - point.x, points[i].y - point.y))
     }
     var angleSum = 0;
     for(var i = 0;i < normedPolygone.length - 1;i++) {
@@ -536,22 +572,15 @@
     }else {
       return false
     }
-  }, applayTransformMatrix:function(matrix) {
-    var polygone = this.polygone;
-    var points = [];
-    for(var i in polygone) {
-      points.push([polygone[i].x, polygone[i].y, 1])
+  }, applyTransformMatrix:function(matrix) {
+    var points = matrix.x(this._matrix);
+    return points.transpose()
+  }, getPointByIndex:function(index) {
+    if(gizmo.isTNumber(index) && index >= 0) {
+      return this._points[index]
+    }else {
+      throw Error("index must be poistive integer!");
     }
-    var points = new gizmo.Math.Matrix(points);
-    var points = points.x(matrix).elements;
-    for(var i in polygone) {
-      polygone[i].x = points[i][0];
-      polygone[i].y = points[i][1]
-    }
-  }, set polygone(arr) {
-    this._polygone = arr
-  }, get polygone() {
-    return this._polygone
   }};
   gizmo.Math.Polygone = Polygone;
   gizmo.Modules["polygone"] = {name:"polygone", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}

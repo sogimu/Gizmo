@@ -1,6 +1,6 @@
 (function(gizmo) {
     /**
-     * * Полигон заданный векторами
+     * * Полигон заданный точками
      *
      * @constructor
      * @param {number} x
@@ -12,25 +12,32 @@
 
     var Polygone = function(arr) {
         if(gizmo.isTArray(arr)) {
-            this.polygone = arr;     
+            for(var i in arr) {
+                this.addPoint(arr[i]);
+            }     
         } else {
             throw Error("Argument are not array!");
         }
     }
-    Polygone.prototype = {
-        _polygone: [],
 
-        addVector: function(vector) {
-            this.polygone.push(vector);
+    Polygone.prototype = {
+        _points: [],
+        _arr: [],
+        _matrix: null,
+
+        addPoint: function(point) {
+            this._points.push(point);
+            this._arr.push([point.x, point.y, 1]);
+            this._matrix = (new gizmo.Math.Matrix(this._arr)).transpose();
             return this;
         },
 
         havePoint: function(point) {
             var normedPolygone = [];
             
-            var polygone = this.polygone;
-            for(var i in polygone){
-                normedPolygone.push(new gizmo.Math.Vector2D(polygone[i].x - point.x, polygone[i].y - point.y));
+            var points = this._points;
+            for(var i in points){
+                normedPolygone.push(new gizmo.Math.Vector2D(points[i].x - point.x, points[i].y - point.y));
             }
 
   
@@ -48,60 +55,22 @@
 
         },
 
-        applayTransformMatrix: function(matrix) {
-            var polygone = this.polygone;
-            var points = [];
-
-            var row = [];    
-            for(var i in polygone) {
-                row.push(polygone[j].x);
-                  
-            }
-            points.push(row);
-
-            var row = [];    
-            for(var i in polygone) {
-                row.push(polygone[j].y);
-                  
-            }
-            points.push(row);
-
-            var row = [];    
-            for(var i in polygone) {
-                row.push(1);
-                  
-            }
-            points.push(row);
-
-            var points = new gizmo.Math.Matrix(points);
-            var points = matrix.x(points).elements;
-            
-            for(var i in polygone) {
-                polygone[i].x = points[i][0];
-                polygone[i].y = points[i][1];
-
-            }
-
-            for(var i in points) {
-                var point = new gizmo.Math.Vector2D(0,0);
-                for(var j in points[i]) {
-                    polygone[i].x = points[i][j];
-                    polygone[i].y = points[i+1][j];
-                }                
-            }            
+        applyTransformMatrix: function(matrix) {
+            var points = matrix.x(this._matrix);            
+            return points.transpose();
 
         },
 
-        // Setters/Getters
-
-        // polygone
-        set polygone(arr) {
-            this._polygone = arr;
-        },
-        get polygone() {
-            return this._polygone;
+        getPointByIndex: function(index) {
+            if(gizmo.isTNumber(index) && index >= 0) {
+                return this._points[index];
+            } else {
+                throw Error("index must be poistive integer!")
+            }
         }
 
+
+        // Setters/Getters
     }
 
     gizmo.Math.Polygone = Polygone;
