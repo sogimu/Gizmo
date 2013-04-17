@@ -414,4 +414,10 @@ test( "gizmo.Math.Polygone", function() {
 		ok(false, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
 
 	}
+
+	var polygone0 = new gizmo.Math.Polygone([]);
+	var polygone1 = new gizmo.Math.Polygone([new gizmo.Math.Point2D(10,10),new gizmo.Math.Point2D(110,10),new gizmo.Math.Point2D(110,110),new gizmo.Math.Point2D(10,110)]);
+
+	ok( (polygone0._points.length != polygone1._points.length), "ok( gizmo.Math.Polygone _points != _points Passed!");
+
 });
