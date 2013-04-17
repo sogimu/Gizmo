@@ -542,7 +542,7 @@
   gizmo.Modules["Vector2D"] = {name:"Vector2D", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}
 })(gizmo);
 (function(gizmo) {
-  var Polygone = function(arr) {
+  var Polygone = gizmo.Class({Initialize:function(arr) {
     if(gizmo.isTArray(arr)) {
       for(var i in arr) {
         this.addPoint(arr[i])
@@ -550,8 +550,7 @@
     }else {
       throw Error("Argument are not array!");
     }
-  };
-  Polygone.prototype = {_points:[], _arr:[], _matrix:null, addPoint:function(point) {
+  }, Statics:{_points:[], _arr:[], _matrix:null}, Methods:{addPoint:function(point) {
     this._points.push(point);
     this._arr.push([point.x, point.y, 1]);
     this._matrix = (new gizmo.Math.Matrix(this._arr)).transpose();
@@ -581,7 +580,7 @@
     }else {
       throw Error("index must be poistive integer!");
     }
-  }};
+  }}});
   gizmo.Math.Polygone = Polygone;
   gizmo.Modules["polygone"] = {name:"polygone", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}
 })(gizmo);
