@@ -389,11 +389,11 @@ test( "gizmo.Math.Polygone", function() {
 	
 	var sk = new gizmo.Math.Polygone(polygone);
 
-	ok( sk.havePoint(new gizmo.Math.Point2D(50,50)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
-	ok( !sk.havePoint(new gizmo.Math.Point2D(120,120)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
+	ok( sk.HasPoint(new gizmo.Math.Vector2D(50,50)), " ok( gizmo.Math.Polygone.HasPoint() Passed!" );
+	ok( !sk.HasPoint(new gizmo.Math.Vector2D(120,120)), " ok( gizmo.Math.Polygone.HasPoint() Passed!" );
 
 	var polygone0 = new gizmo.Math.Polygone([]);
-	var polygone1 = new gizmo.Math.Polygone([new gizmo.Math.Point2D(10,10),new gizmo.Math.Point2D(110,10),new gizmo.Math.Point2D(110,110),new gizmo.Math.Point2D(10,110)]);
+	var polygone1 = new gizmo.Math.Polygone([new gizmo.Math.Vector2D(10,10),new gizmo.Math.Vector2D(110,10),new gizmo.Math.Vector2D(110,110),new gizmo.Math.Vector2D(10,110)]);
 
 	ok( (polygone0._points.length != polygone1._points.length), "ok( gizmo.Math.Polygone _points != _points Passed!");
 

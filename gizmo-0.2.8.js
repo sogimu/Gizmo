@@ -545,15 +545,15 @@
   var Polygone = gizmo.Class({Initialize:function(arr) {
     if(gizmo.isTArray(arr)) {
       for(var i in arr) {
-        this.addPoint(arr[i])
+        this.AddPoint(arr[i])
       }
     }else {
       throw Error("Argument are not array!");
     }
-  }, Statics:{_points:[]}, Methods:{addPoint:function(point) {
+  }, Statics:{_points:[]}, Methods:{AddPoint:function(point) {
     this._points.push(point);
     return this
-  }, havePoint:function(point) {
+  }, HasPoint:function(point) {
     var normedPolygone = [];
     var points = this._points;
     for(var i in points) {
@@ -569,7 +569,7 @@
     }else {
       return false
     }
-  }, getPointByIndex:function(index) {
+  }, GetPointByIndex:function(index) {
     if(gizmo.isTNumber(index) && index >= 0) {
       return this._points[index]
     }else {
