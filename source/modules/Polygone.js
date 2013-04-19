@@ -1,6 +1,6 @@
 (function(gizmo) {
     /**
-     * * Полигон заданный точками
+     * * Полигон заданный векторами
      *
      * @constructor
      * @param {number} x
@@ -23,16 +23,12 @@
         },
         Statics: {
             _points: [],
-            _arr: [],
-            _matrix: null,
 
         },
         Methods: {
 
             addPoint: function(point) {
                 this._points.push(point);
-                this._arr.push([point.x, point.y, 1]);
-                this._matrix = (new gizmo.Math.Matrix(this._arr)).transpose();
                 return this;
             },
 
@@ -59,12 +55,6 @@
 
             },
 
-            applyTransformMatrix: function(matrix) {
-                var points = matrix.x(this._matrix);            
-                return points.transpose();
-
-            },
-
             getPointByIndex: function(index) {
                 if(gizmo.isTNumber(index) && index >= 0) {
                     return this._points[index];
@@ -72,7 +62,6 @@
                     throw Error("index must be poistive integer!")
                 }
             }
-
 
             // Setters/Getters
         }
@@ -85,7 +74,7 @@
         version: 0.1,
         author: "Alexander Lizin aka Sogimu",
         email: "sogimu@nxt.ru",
-        description: "2D-вектор"
+        description: "Полигон заданный векторами"
     };
 
 }(gizmo));

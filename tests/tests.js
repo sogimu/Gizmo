@@ -391,29 +391,6 @@ test( "gizmo.Math.Polygone", function() {
 
 	ok( sk.havePoint(new gizmo.Math.Point2D(50,50)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
 	ok( !sk.havePoint(new gizmo.Math.Point2D(120,120)), " ok( gizmo.Math.Polygone.havePoint() Passed!" );
-	var dd = new gizmo.Math.Matrix([[1,0,0],[0,1,0],[0,0,1]]);
-	var d = sk.applyTransformMatrix(dd);
-	d = d.elements;
-	if(d[0][0] == 10 && d[0][1] == 10 && d[0][2] == 1) {
-		if(d[1][0] == 110 && d[1][1] == 10 && d[1][2] == 1) {
-			if(d[2][0] == 110 && d[2][1] == 110 && d[2][2] == 1) {
-				if(d[3][0] == 10 && d[3][1] == 110 && d[3][2] == 1) {
-					ok(true, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
-				} else {
-					ok(false, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
-				}
-			} else {
-				ok(false, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
-
-			}
-		} else {
-			ok(false, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
-
-		}
-	} else {
-		ok(false, "ok( gizmo.Math.Polygone.applyTransformMatrix() Passed!");
-
-	}
 
 	var polygone0 = new gizmo.Math.Polygone([]);
 	var polygone1 = new gizmo.Math.Polygone([new gizmo.Math.Point2D(10,10),new gizmo.Math.Point2D(110,10),new gizmo.Math.Point2D(110,110),new gizmo.Math.Point2D(10,110)]);

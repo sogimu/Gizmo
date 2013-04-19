@@ -550,10 +550,8 @@
     }else {
       throw Error("Argument are not array!");
     }
-  }, Statics:{_points:[], _arr:[], _matrix:null}, Methods:{addPoint:function(point) {
+  }, Statics:{_points:[]}, Methods:{addPoint:function(point) {
     this._points.push(point);
-    this._arr.push([point.x, point.y, 1]);
-    this._matrix = (new gizmo.Math.Matrix(this._arr)).transpose();
     return this
   }, havePoint:function(point) {
     var normedPolygone = [];
@@ -571,9 +569,6 @@
     }else {
       return false
     }
-  }, applyTransformMatrix:function(matrix) {
-    var points = matrix.x(this._matrix);
-    return points.transpose()
   }, getPointByIndex:function(index) {
     if(gizmo.isTNumber(index) && index >= 0) {
       return this._points[index]
@@ -582,7 +577,7 @@
     }
   }}});
   gizmo.Math.Polygone = Polygone;
-  gizmo.Modules["polygone"] = {name:"polygone", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"2D-\u0432\u0435\u043a\u0442\u043e\u0440"}
+  gizmo.Modules["polygone"] = {name:"polygone", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041f\u043e\u043b\u0438\u0433\u043e\u043d \u0437\u0430\u0434\u0430\u043d\u043d\u044b\u0439 \u0432\u0435\u043a\u0442\u043e\u0440\u0430\u043c\u0438"}
 })(gizmo);
 (function(gizmo) {
   var ajax = gizmo.Class({construct:function(O) {
