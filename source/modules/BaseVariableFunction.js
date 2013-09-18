@@ -77,10 +77,52 @@
 		}
 		return newObj
 	};
+
+    /**
+     * Функция для проверки заданности переменной
+     *
+     * @param {object} O Переменная для проверки
+     * @return {object} O или исключение
+     */
+
+    var Assert = function(O) {
+        if(gizmo.isSet(O)) {
+            return O;
+        } else {
+          throw TypeError("Varibale is not been set!");
+        }
+    };
+	
+	/**
+     * Функция для полученния глубого вложенного поля объекта
+     *
+     * @param {object} O    Объект
+     * @param {string} path Путь к полю 
+     * @return {object} поле или исключение
+     */
+    
+    var GetField = function(O, path) {
+    	gizmo.Filter(O, "Object");
+    	gizmo.Filter(path, "String");
+
+    	var pathNames = path.split(".");
+        var dir = pathNames.shift();
+        var field = gizmo.Assert( O[dir] );
+        if(pathNames.length) {
+	        while(dir = pathNames.shift()) {
+	            field = gizmo.Assert( field[dir] );
+	        }
+    	}
+    	return field;
+
+    };
+
     gizmo.isSet = isSet;
     gizmo.itIs = itIs;
     gizmo.type = type;
     gizmo.clone = clone;
+    gizmo.Assert = Assert;
+    gizmo.GetField = GetField;
 
     gizmo.Modules['baseVariableFunction'] = {
         name: "Type",

@@ -20,20 +20,20 @@
         var target = O.target?O.target:'>';
         
         if(O.field) {
-            gizmo.Assert(mas[0][O.field]);
+            gizmo.Assert( gizmo.GetField( mas[0], O.field) );
         
             if(target == '>') {
                 mas.sort(function(a,b) {
-                    var s1 = a[O.field]; //будет полюбому строка
-                    var s2 = b[O.field];
-                    if(s1 > s2){return -1;} //сравнить длины
+                    var s1 = gizmo.GetField( a, O.field); 
+                    var s2 = gizmo.GetField( b, O.field)
+                    if(s1 > s2){return -1;}
                     else if(s1 < s2){return 1;}
                 return 0;
                 });
             } else {
                 mas.sort(function(a,b) {
-                    var s1 = a[O.field]; //будет полюбому строка
-                    var s2 = b[O.field];
+                    var s1 = gizmo.GetField( a, O.field); 
+                    var s2 = gizmo.GetField( b, O.field)
                     if(s1 < s2){return -1;} //сравнить длины
                     else if(s1 > s2){return 1;}
                 return 0;

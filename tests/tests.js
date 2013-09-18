@@ -102,7 +102,9 @@ test( "gizmo.nativeSort", function() {
 	mas = gizmo.nativeSort( {mas: [{a:2},{a:1},{a:4},{a:6}], target: '<', field: 'a'} );
 	ok( (mas[0].a<mas[1].a) && (mas[1].a<mas[2].a) && (mas[2].a<mas[3].a), " ok( gizmo.nativeSort( {mas: [{a:2},{a:1},{a:4},{a:6}], target: '<', field: 'a'} ) == [{a:1}, {a:2}, {a:4}, {a:6}] Passed!" );
 	
-
+	mas = gizmo.nativeSort( {mas: [{a: {b: 2}},{a:{b:1}},{a:{b:4}},{a:{b:6}}], target: '<', field: 'a.b'} );
+	ok( (mas[0].a.b<mas[1].a.b) && (mas[1].a.b<mas[2].a.b) && (mas[2].a.b<mas[3].a.b), " ok( gizmo.nativeSort( {mas: [{a: {b: 2}},{a:{b:1}},{a:{b:4}},{a:{b:6}}], target: '<', field: 'a.b'} ) == [{a:1}, {a:2}, {a:4}, {a:6}] Passed!" );
+	
 });   
 	   
 module( "Class" );
