@@ -20,6 +20,8 @@
         var target = O.target?O.target:'>';
         
         if(O.field) {
+            gizmo.Assert(mas[0][O.field]);
+        
             if(target == '>') {
                 mas.sort(function(a,b) {
                     var s1 = a[O.field]; //будет полюбому строка

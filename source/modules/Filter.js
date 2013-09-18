@@ -24,6 +24,7 @@
 		  throw TypeError(gizmo.type(O) + " != " + type);
 		}
 	};
+
 	var isType = function(O) {
 		if(gizmo.itIs(O,"String") === true) {
 		  var flag = true;
@@ -38,8 +39,18 @@
 		  throw TypeError(gizmo.type(O) + " <- it's not name of type");
 		}
 	};
+
+    var Assert = function(O) {
+        if(gizmo.isSet(O)) {
+            return O;
+        } else {
+          throw TypeError("Varibale is not been set!");
+        }
+    };
+
     gizmo.Filter = Filter;
 
+    gizmo.Assert = Assert;
 
     gizmo.Modules['Filters'] = {
         name: "Filters",
