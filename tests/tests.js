@@ -1,7 +1,7 @@
 module( "baseVaribleFunctions" );
 test( "gizmo.type", function() {
 	// String
-	ok( gizmo.type( "1234ergt#%" ) == "String", " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
+	ok( gizmo.type( "1234ergt#%" ) == "swString", " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
 	// Number
 	ok( gizmo.type( -2423.2424 ) == "Number", " ok( gizmo.type( -2423.2424 ) == \"Number\" Passed!" );
 	// Array
@@ -70,7 +70,7 @@ test( "gizmo.isTString", function() {
 	// String
 	ok( gizmo.isTString( "1234ergt#%" ) == true, " ok( gizmo.isTString( \"1234ergt#%\" ) == true Passed!" );
 	// Number
-	ok( gizmo.isTString( -2423.2424 ) == false, " ok( gizmo.isTString( -2423.2424 ) == false Passed!" );
+	ok( gizmo.isTString( -2s423.2424 ) == false, " ok( gizmo.isTString( -2423.2424 ) == false Passed!" );
 	// Array
 	ok( gizmo.isTString( [3,4,[1,3],{}] ) == false, " ok( gizmo.isTString( [3,4,[1,3],{}] ) == false Passed!" );
 	// Object
