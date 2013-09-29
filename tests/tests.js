@@ -1,7 +1,7 @@
 module( "baseVaribleFunctions" );
 test( "gizmo.type", function() {
 	// String
-	ok( gizmo.type( "1234ergt#%" ) == "String", " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
+	ok( gizmo.type( "1234ergt#%" ) == "String",  " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
 	// Number
 	ok( gizmo.type( -2423.2424 ) == "Number", " ok( gizmo.type( -2423.2424 ) == \"Number\" Passed!" );
 	// Array
