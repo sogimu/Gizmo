@@ -1,33 +1,12 @@
 <?xml version="1.0"?>
 <!--
- Tests completed in 23 milliseconds.
-37 tests of 40 passed, 3 failed. 
+ Tests completed in 24 milliseconds.
+40 tests of 40 passed, 0 failed. 
 -->
-<testsuite name="QUnit - JavaScript Tests" timestamp="2013-09-29T23:28:33Z" tests="40" failures="3" time="0.023">
+<testsuite name="QUnit - JavaScript Tests" timestamp="2013-09-29T23:51:39Z" tests="40" failures="0" time="0.024">
 <testcase name="gizmo.type" classname="baseVaribleFunctions">
-<failure message="baseVaribleFunctions" type="baseVaribleFunctions">
- ok( gizmo.type( &quot;1234ergt#%&quot; ) == &quot;String&quot; Passed!Source:     at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:435
-    at file:///home/sogimu/Gizmo/tests/tests.js:4
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:136
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:279
-    at process (file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:1277)
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:383 ok( gizmo.type( -2423.2424 ) == &quot;Number&quot; Passed!Source:     at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:435
-    at file:///home/sogimu/Gizmo/tests/tests.js:6
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:136
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:279
-    at process (file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:1277)
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:383 ok( gizmo.type( [3,4,[1,3],{}] ) == &quot;Array&quot; Passed! ok( gizmo.type( {fwe:22, fg: [46,3]}} ) == &quot;Object&quot; Passed! ok( gizmo.type( function() {} ) == &quot;Function&quot; Passed! ok( gizmo.type( new Date() ) == &quot;Date&quot; Passed! ok( gizmo.type( true ) == &quot;Boolean&quot; Passed!
-</failure>
 </testcase>
 <testcase name="gizmo.clone" classname="baseVaribleFunctions">
-<failure message="baseVaribleFunctions" type="baseVaribleFunctions">
- ok( gizmo.clone(new gizmo.Math.Matrix([])) have exeption. Not Passed!Source:     at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:435
-    at file:///home/sogimu/Gizmo/tests/tests.js:27
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:136
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:279
-    at process (file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:1277)
-    at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:383 ok( gizmo.clone(new gizmo.Math.Matrix({})) with not exeption. Passed! ok( gizmo.clone(new gizmo.Math.Matrix()) with not exeption. Passed! ok( gizmo.clone(new gizmo.Math.Matrix) with not exeption. Passed!
-</failure>
 </testcase>
 <testcase name="gizmo.isTString" classname="Checks">
 </testcase>
