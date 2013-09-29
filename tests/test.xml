@@ -3,7 +3,7 @@
  Tests completed in 23 milliseconds.
 37 tests of 40 passed, 3 failed. 
 -->
-<testsuite name="QUnit - JavaScript Tests" timestamp="2013-09-29T09:43:30Z" tests="40" failures="3" time="0.023">
+<testsuite name="QUnit - JavaScript Tests" timestamp="2013-09-29T23:28:33Z" tests="40" failures="3" time="0.023">
 <testcase name="gizmo.type" classname="baseVaribleFunctions">
 <failure message="baseVaribleFunctions" type="baseVaribleFunctions">
  ok( gizmo.type( &quot;1234ergt#%&quot; ) == &quot;String&quot; Passed!Source:     at file:///home/sogimu/Gizmo/tests/resources/qunit-1.10.0.js:435
