@@ -1,9 +1,9 @@
 module( "baseVaribleFunctions" );
 test( "gizmo.type", function() {
 	// String
-	ok( gizmo.type( "1234ergt#%" ) == "String", " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
+	ok( gizmo.type( "1234ergt#%" ) == "DString", " ok( gizmo.type( \"1234ergt#%\" ) == \"String\" Passed!" );
 	// Number
-	ok( gizmo.type( -2423.2424 ) == "Number", " ok( gizmo.type( -2423.2424 ) == \"Number\" Passed!" );
+	ok( gizmo.type( -2423.2424 ) == "sNumber", " ok( gizmo.type( -2423.2424 ) == \"Number\" Passed!" );
 	// Array
 	ok( gizmo.type( [3,4,[1,3],{}] ) == "Array", " ok( gizmo.type( [3,4,[1,3],{}] ) == \"Array\" Passed!" );
 	// Object
@@ -19,7 +19,7 @@ test( "gizmo.type", function() {
 	
 test( "gizmo.clone", function() {
 	try {
-		gizmo.clone(new gizmo.Math.Matrix([]));
+		gizmo.clone(new Sgizmo.Math.Matrix([]));
 		ok( true, " ok( gizmo.clone(new gizmo.Math.Matrix([])) with not exeption. Passed!" );
 
 	}
