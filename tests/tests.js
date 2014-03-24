@@ -64,6 +64,40 @@ test( "gizmo.clone", function() {
 
 });
 
+test( "gizmo.merge", function() {
+	var a = {
+		a: 1,
+		c: 0,
+		_value: 0
+	};
+	a.__defineGetter__("value", function() {
+        return this._value;
+    });
+    a.__defineSetter__("value", function(value) {
+    	this._value = value;
+    });
+
+	var b = {
+		a: 2,
+		b: 0,
+		c: 0
+	};
+
+	var res = gizmo.merge(a, b);
+	
+	ok(res.a == 1 && res.b == 0 && res.c == 0);
+	
+	res.value = 123;
+	console.log(res.value == 123 && res._value == 123);
+	console.log(res.value);
+	console.log(res._value);
+	ok(res.value == 123 && res._value == 123);
+	var d;
+
+
+});
+
+
 module( "Checks" );
 test( "gizmo.isTString", function() {
 	gizmo.isTString	

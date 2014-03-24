@@ -44,6 +44,42 @@
     }
     return newObj
   };
+  var merge = function(obj1, obj2) {
+    gizmo.Filter(obj1, "Object");
+    gizmo.Filter(obj2, "Object");
+    for(var key in obj1) {
+      try {
+        if(gizmo.type(obj1[key]) == "Object") {
+          obj2[key] = merge(obj1[key], obj2[key])
+        }else {
+          var g = obj1.__lookupGetter__(key), s = obj1.__lookupSetter__(key);
+          if(g || s) {
+            if(g) {
+              obj2.__defineGetter__(key, g)
+            }
+            if(s) {
+              obj2.__defineSetter__(key, s)
+            }
+          }else {
+            obj2[key] = obj1[key]
+          }
+        }
+      }catch(e) {
+        var g = obj1.__lookupGetter__(key), s = obj1.__lookupSetter__(key);
+        if(g || s) {
+          if(g) {
+            obj2.__defineGetter__(key, g)
+          }
+          if(s) {
+            obj2.__defineSetter__(key, s)
+          }
+        }else {
+          obj2[key] = obj1[key]
+        }
+      }
+    }
+    return obj2
+  };
   var Assert = function(O) {
     if(gizmo.isSet(O)) {
       return O
@@ -68,6 +104,7 @@
   gizmo.itIs = itIs;
   gizmo.type = type;
   gizmo.clone = clone;
+  gizmo.merge = merge;
   gizmo.Assert = Assert;
   gizmo.GetField = GetField;
   gizmo.Modules["baseVariableFunction"] = {name:"Type", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043e\u043a \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u044b\u0445 \u043d\u0430 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043e\u0432\u0430\u043d\u0438\u0435, \u0443\u0442\u0438\u043d\u043d\u043e\u0439 \u0442\u0438\u043f\u0438\u0437\u0430\u0446\u0438\u0438 \u0438 \u0442.\u0434. "}

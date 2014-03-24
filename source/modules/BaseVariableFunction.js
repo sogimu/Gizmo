@@ -56,27 +56,83 @@
      * Клонирование объекта
      *
      * @param {object} obj
-     */	
-	var clone = function clone(obj) {
-		if(gizmo.type(obj) !== "Array" && gizmo.type(obj) !== "Object") {
-		  return obj
-		}
-		var newObj = new obj.constructor;
-		for(i in obj) {
-		  if(obj[i] && obj.hasOwnProperty(i)) {
-			if(gizmo.itIs(obj[i], "Object")) {
-			  newObj[i] = clone(obj[i])
-			}else {
-			  if(obj[i] && gizmo.itIs(obj[i], "Array")) {
-				newObj[i] = [].concat(obj[i])
-			  }else {
-				newObj[i] = obj[i]
-			  }
-			}
-		  }
-		}
-		return newObj
-	};
+     */ 
+    var clone = function clone(obj) {
+        if(gizmo.type(obj) !== "Array" && gizmo.type(obj) !== "Object") {
+          return obj;
+        }
+        var newObj = new obj.constructor;
+        for(i in obj) {
+          if(obj[i] && obj.hasOwnProperty(i)) {
+            if(gizmo.itIs(obj[i], "Object")) {
+              newObj[i] = clone(obj[i]);
+            }else {
+              if(obj[i] && gizmo.itIs(obj[i], "Array")) {
+                newObj[i] = [].concat(obj[i]);
+              }else {
+                newObj[i] = obj[i];
+              }
+            }
+          }
+        }
+        return newObj;
+    };
+
+
+    /**
+     * Function Merge for two object
+     *
+     * @param {object} obj1    object with new properties
+     * @param {object} obj2    object for saving new properties
+     * @return{object} obj2
+     */ 
+
+    var merge = function(obj1, obj2) {
+        gizmo.Filter(obj1, "Object");
+        gizmo.Filter(obj2, "Object");
+                
+        for(var key in obj1) {
+            try {
+                if(gizmo.type(obj1[key]) == "Object") {
+                    obj2[key] = merge(obj1[key], obj2[key]);
+                } else {
+                    var g = obj1.__lookupGetter__(key), s = obj1.__lookupSetter__(key);
+                           
+                    if ( g || s ) {
+                        if ( g ) {
+                            obj2.__defineGetter__(key, g);
+                        }   
+                        if ( s ) {
+                            obj2.__defineSetter__(key, s);
+                        }        
+                    } else {
+                        obj2[key] = obj1[key];
+
+                    };
+                    
+                };
+            } catch(e) {
+              // Property in destination object not set; create it and set its value.
+                var g = obj1.__lookupGetter__(key), s = obj1.__lookupSetter__(key);
+                       
+                if ( g || s ) {
+                    if ( g ) {
+                        obj2.__defineGetter__(key, g);
+                    }   
+                    if ( s ) {
+                        obj2.__defineSetter__(key, s);
+                    }        
+                } else {
+                    obj2[key] = obj1[key];
+
+                };
+
+            };
+        };
+
+        return obj2;
+
+    };
 
     /**
      * Функция для проверки заданности переменной
@@ -94,10 +150,10 @@
     };
 	
 	/**
-     * Функция для полученния глубого вложенного поля объекта
+     * Функция для полученния глубоко вложенного поля объекта
      *
      * @param {object} O    Объект
-     * @param {string} path Путь к полю 
+     * @param {string} path Путь к полю состоящий из имен полей разделенных точками
      * @return {object} поле или исключение
      */
     
@@ -121,6 +177,7 @@
     gizmo.itIs = itIs;
     gizmo.type = type;
     gizmo.clone = clone;
+    gizmo.merge = merge;
     gizmo.Assert = Assert;
     gizmo.GetField = GetField;
 
