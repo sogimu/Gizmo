@@ -133,21 +133,6 @@
         return obj2;
 
     };
-
-    /**
-     * Функция для проверки заданности переменной
-     *
-     * @param {object} O Переменная для проверки
-     * @return {object} O или исключение
-     */
-
-    var Assert = function(O) {
-        if(gizmo.isSet(O)) {
-            return O;
-        } else {
-          throw TypeError("Varibale is not been set!");
-        }
-    };
 	
 	/**
      * Функция для полученния глубоко вложенного поля объекта
@@ -178,7 +163,6 @@
     gizmo.type = type;
     gizmo.clone = clone;
     gizmo.merge = merge;
-    gizmo.Assert = Assert;
     gizmo.GetField = GetField;
 
     gizmo.Modules['baseVariableFunction'] = {

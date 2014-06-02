@@ -10,8 +10,8 @@
      */
 
     /**
-     * Фильтр для проверки соответсвия типа переменной типу String. Если переменная соответсвует типу, то метод возвращает её,
-     * если нет, то выбрасывает исключение с текстом ошибки
+     * Фильтр для проверки соответсвия типа переменной переданному названию типа переменной. Если переменная соответсвует типу, то метод возвращает её,
+     * если нет, то выбрасывает исключение
      *
      * @param {object} O Переменная для проверки
      * @param {string} type Требуемый тип
@@ -40,6 +40,13 @@
 		}
 	};
 
+    /**
+     * Функция для проверки заданности переменной
+     *
+     * @param {object} O Переменная для проверки
+     * @return {object} O или исключение
+     */
+
     var Assert = function(O) {
         if(gizmo.isSet(O)) {
             return O;
@@ -48,16 +55,33 @@
         }
     };
 
+    /**
+     * Функция для проверки не строгого равенства объектов (==)
+     *
+     * @param {Object} obj1 Переменная для проверки
+     * @param {Object} obj2 Переменная для проверки
+     * @return {Boolean} res
+     */
+
+    var Equal = function(obj1, obj2) {
+        if(gizmo.isSet(obj1) && gizmo.isSet(obj2) && obj1 == obj2) {
+            return true;
+        } else {
+          throw TypeError("Varibalies is not equal! " + obj1 + " != " + obj2);
+        }
+    };
+
     gizmo.Filter = Filter;
 
     gizmo.Assert = Assert;
+    gizmo.Equal = Equal;
 
     gizmo.Modules['Filters'] = {
         name: "Filters",
         version: 0.1,
         author: "Alexander Lizin aka Sogimu",
         email: "sogimu@nxt.ru",
-        description: "Модуль для введения \"фильтра\" проверяющих соответствие переданной переменной её типу"
+        description: "Модуль для введения \"фильтров\" проверяющих соответствие переданной переменной определенным условиям, например типу"
     };
 
 }(gizmo));

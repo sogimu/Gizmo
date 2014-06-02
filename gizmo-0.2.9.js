@@ -80,13 +80,6 @@
     }
     return obj2
   };
-  var Assert = function(O) {
-    if(gizmo.isSet(O)) {
-      return O
-    }else {
-      throw TypeError("Varibale is not been set!");
-    }
-  };
   var GetField = function(O, path) {
     gizmo.Filter(O, "Object");
     gizmo.Filter(path, "String");
@@ -105,7 +98,6 @@
   gizmo.type = type;
   gizmo.clone = clone;
   gizmo.merge = merge;
-  gizmo.Assert = Assert;
   gizmo.GetField = GetField;
   gizmo.Modules["baseVariableFunction"] = {name:"Type", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:"\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043e\u043a \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u044b\u0445 \u043d\u0430 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043e\u0432\u0430\u043d\u0438\u0435, \u0443\u0442\u0438\u043d\u043d\u043e\u0439 \u0442\u0438\u043f\u0438\u0437\u0430\u0446\u0438\u0438 \u0438 \u0442.\u0434. "}
 })(gizmo);
@@ -138,9 +130,17 @@
       throw TypeError("Varibale is not been set!");
     }
   };
+  var Equal = function(obj1, obj2) {
+    if(gizmo.isSet(obj1) && gizmo.isSet(obj2) && obj1 == obj2) {
+      return true
+    }else {
+      throw TypeError("Varibalies is not equal! " + obj1 + " != " + obj2);
+    }
+  };
   gizmo.Filter = Filter;
   gizmo.Assert = Assert;
-  gizmo.Modules["Filters"] = {name:"Filters", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:'\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f "\u0444\u0438\u043b\u044c\u0442\u0440\u0430" \u043f\u0440\u043e\u0432\u0435\u0440\u044f\u044e\u0449\u0438\u0445 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u043f\u0435\u0440\u0435\u0434\u0430\u043d\u043d\u043e\u0439 \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u0439 \u0435\u0451 \u0442\u0438\u043f\u0443'}
+  gizmo.Equal = Equal;
+  gizmo.Modules["Filters"] = {name:"Filters", version:0.1, author:"Alexander Lizin aka Sogimu", email:"sogimu@nxt.ru", description:'\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u0432\u0432\u0435\u0434\u0435\u043d\u0438\u044f "\u0444\u0438\u043b\u044c\u0442\u0440\u043e\u0432" \u043f\u0440\u043e\u0432\u0435\u0440\u044f\u044e\u0449\u0438\u0445 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u043f\u0435\u0440\u0435\u0434\u0430\u043d\u043d\u043e\u0439 \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u0439 \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u043c \u0443\u0441\u043b\u043e\u0432\u0438\u044f\u043c, \u043d\u0430\u043f\u0440\u0438\u043c\u0435\u0440 \u0442\u0438\u043f\u0443'}
 })(gizmo);
 (function(gizmo) {
   gizmo.isTString = function(O) {
